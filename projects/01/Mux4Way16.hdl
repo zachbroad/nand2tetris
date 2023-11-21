@@ -14,19 +14,7 @@ CHIP Mux4Way16 {
     OUT out[16];
     
     PARTS:
-        And(a=sel[0], b=sel[0], out=firstBit);
-        And(a=sel[1], b=sel[1], out=secondBit);
-
-        Not(in=firstBit, out=notFirstBit);
-        Not(in=secondBit, out=notSecondBit);
-
-        Nand(a=firstBit, b=secondBit, out=outputA);
-        And(a=notFirstBit, b=secondBit, out=outputB);
-        And(a=firstBit, b=notSecondBit, out=outputC);
-        And(a=firstBit, b=secondBit, out=outputD);
-
-        And(a=outputA, b=outputA, out=a[15:0]);
-        And(a=outputB, b=outputB, out=b[15:0]);
-        And(a=outputC, b=outputC, out=c[15:0]);
-        And(a=outputD, b=outputD, out=d[15:0]);
+        Mux16(a=a, b=b, sel=sel[0], out=mux1);
+        Mux16(a=c, b=d, sel=sel[0], out=mux2);
+        Mux16(a=mux1, b=mux2, sel=sel[1], out=out);
 }
